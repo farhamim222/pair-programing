@@ -1,35 +1,12 @@
-const express = require("express");
+// app.js
+const express = require('express');
 const app = express();
+const tourRouter = require('./routes/tourRouter');
 
-const {
-  getAllTours,
-  getTourById,
-  createTour,
-  updateTour,
-  deleteTour,
-} = require("./tourHandlers.js"); 
+app.use(express.json()); // Middleware to parse JSON request bodies
+app.use(tourRouter); // Use the tour routes
 
-// Middleware to parse JSON
-app.use(express.json());
-
-// ROUTES
-// GET /tours
-app.get("/tours", getAllTours);
-
-// POST /tours
-app.post("/tours", createTour);
-
-// GET /tours/:tourId
-app.get("/tours/:tourId", getTourById);
-
-// PUT /tours/:tourId
-app.put("/tours/:tourId", updateTour);
-
-// DELETE /tours/:tourId
-app.delete("/tours/:tourId", deleteTour);
-
-const port = 4000;
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
